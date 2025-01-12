@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            position: relative;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+        }
+
+        .content {
+            margin: 50px;
+            position: relative;
+        }
+
+        .admin-form input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            width: 200px;
+        }
+
+        .admin-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 220px;
+        }
+
+        .admin-form button:hover {
+            background-color: #45a049;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff0000;
+        }
+
+        .feedback.success {
+            color: #4CAF50;
+        }
+
+        .timer {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        /* Eye Icon */
+        .eye-icon {
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Animation to move the eye icon */
+        @keyframes moveEye {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(100px, 0); }
+            50% { transform: translate(0, 100px); }
+            75% { transform: translate(-100px, 0); }
+            100% { transform: translate(0, -100px); }
+        }
+
+        .eye-icon.move {
+            animation: moveEye 5s infinite;
+        }
+    </style>
+    <script>
+        let attemptCount = 0;
+        let timer;
+
+        function checkCredentials() {
+            const username = document.getElementById('username').value;
+            const passcode = document.getElementById('passcode').value;
+            const feedback = document.getElementById('feedback');
+
+            // Clear previous timer if exists
+            clearTimeout(timer);
+
+            // Validate both username and passcode
+            if (username === "admin" && passcode === "5555") {
+                feedback.classList.remove("failure");
+                feedback.classList.add("success");
+                feedback.textContent = "Access Granted! Welcome to the Admin Dashboard.";
+
+                // Show admin controls after successful login
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('login-form').style.display = 'none'; // Hide login form
+            } else {
+                attemptCount++;
+                if (attemptCount >= 3) {
+                    feedback.classList.remove("success");
+                    feedback.classList.add("failure");
+                    feedback.textContent = "Too many failed attempts. Please try again later.";
+                    document.querySelector('button').disabled = true; // Disable button
+                    // Timer for enabling button again after 30 seconds
+                    timer = setTimeout(function() {
+                        document.querySelector('button').disabled = false;
+                        attemptCount = 0;
+                        feedback.textContent = '';
+                    }, 30000);
+                } else {
+                    feedback.classList.remove("success");
+                    feedback.classList.add("failure");
+                    feedback.textContent = "Incorrect username or passcode. Attempt " + attemptCount + " of 3.";
+                }
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passcodeInput = document.getElementById('passcode');
+            const eyeIcon = document.getElementById('eye');
+            
+            if (passcodeInput.type === "password") {
+                passcodeInput.type = "text";
+                eyeIcon.style.color = "#4CAF50";  // Change eye color when password is visible
+            } else {
+                passcodeInput.type = "password";
+                eyeIcon.style.color = "#000";  // Reset eye color when password is hidden
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <div class="content" id="login-form">
+        <h2>Please enter your credentials:</h2>
+        <div class="admin-form">
+            <input type="text" id="username" placeholder="Enter username" aria-label="Username input">
+            <input type="password" id="passcode" placeholder="Enter passcode" aria-label="Passcode input">
+            <button onclick="checkCredentials()">Submit</button>
+        </div>
+        <div id="feedback" class="feedback"></div>
+    </div>
+
+    <!-- Eye Icon for password visibility -->
+    <i class="eye-icon move" id="eye" onclick="togglePassword()">👁️</i>
+
+    <div id="admin-panel" class="admin-panel">
+        <h2>Welcome, Admin!</h2>
+        <button onclick="toggleFeature('feature1')">Toggle Feature 1</button>
+        <button onclick="toggleFeature('feature2')">Toggle Feature 2</button>
+        <button onclick="viewLogs()">View Logs</button>
+        <button onclick="manageUsers()">Manage Users</button>
+
+        <div id="feature1" style="display: none;">
+            <h3>Feature 1 Control</h3>
+            <p>This could be a control for some feature, like turning a service on or off.</p>
+        </div>
+
+        <div id="feature2" style="display: none;">
+            <h3>Feature 2 Control</h3>
+            <p>This could be a control for another admin feature.</p>
+        </div>
+    </div>
+
+    <div class="timer" id="timer"></div>
+
+</body>
+</html>
