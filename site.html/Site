@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        header {
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+        }
+        h1 {
+            margin: 0;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .video-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .video-container video {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .security-panel, .ad-panel {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .security-panel {
+            background-color: #f9f9f9;
+        }
+        input[type="number"], button {
+            padding: 10px;
+            margin: 5px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Site</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Introduction</h2>
+            <p>👇👇👇 This full video is a red flag 👇👇👇</p>
+        </section>
+
+        <section>
+            <h2>Uploaded Video</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="video1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <section class="security-panel">
+            <h2>Enter Passcode</h2>
+            <p>Access restricted. Please enter the passcode:</p>
+            <input type="number" id="passcode" placeholder="Enter 4-digit passcode">
+            <button onclick="validatePasscode()">Submit</button>
+            <p id="security-message" style="color: red; font-weight: bold;"></p>
+        </section>
+
+        <section id="ad-panel" class="ad-panel" style="display: none;">
+            <h2>Sponsored Ads</h2>
+            <p>Ad content goes here...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My GitHub Pages Website</p>
+    </footer>
+
+    <script>
+        function validatePasscode() {
+            const passcode = document.getElementById("passcode").value;
+            const message = document.getElementById("security-message");
+            const adPanel = document.getElementById("ad-panel");
+
+            if (passcode === "2007") {
+                message.style.color = "green";
+                message.textContent = "Access granted!";
+                adPanel.style.display = "block"; // Show ads
+            } else {
+                message.style.color = "red";
+                message.textContent = "Invalid passcode!";
+                adPanel.style.display = "none"; // Hide ads
+            }
+        }
+    </script>
+
+</body>
+</html>
