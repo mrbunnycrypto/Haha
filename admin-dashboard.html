@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Login System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            position: relative;
         }
 
         header {
@@ -87,6 +86,13 @@
         let attemptCount = 0;
         let timer;
 
+        // Dummy user data (In real-world, this should come from a server-side database)
+        const users = {
+            "admin": "adminpassword", // Admin user
+            "user1": "user1pass",    // Regular user 1
+            "user2": "user2pass"     // Regular user 2
+        };
+
         function checkCredentials() {
             const username = document.getElementById('username').value;
             const passcode = document.getElementById('passcode').value;
@@ -95,14 +101,18 @@
             // Clear previous timer if exists
             clearTimeout(timer);
 
-            // Validate both username and passcode
-            if (username === "admin" && passcode === "5555") {
+            // Validate user credentials
+            if (users[username] === passcode) {
                 feedback.classList.remove("failure");
                 feedback.classList.add("success");
-                feedback.textContent = "Access Granted! Welcome to the Admin Dashboard.";
+                feedback.textContent = `Welcome, ${username}! Redirecting...`;
 
-                // Show admin controls after successful login
-                document.getElementById('admin-panel').style.display = 'block';
+                // Show user dashboard or admin panel based on role
+                if (username === "admin") {
+                    document.getElementById('admin-panel').style.display = 'block';
+                } else {
+                    document.getElementById('user-dashboard').style.display = 'block';
+                }
                 document.getElementById('login-form').style.display = 'none'; // Hide login form
             } else {
                 attemptCount++;
@@ -143,7 +153,7 @@
 <body>
 
     <header>
-        <h1>Admin Dashboard</h1>
+        <h1>Login System</h1>
     </header>
 
     <div class="content" id="login-form">
@@ -159,7 +169,14 @@
     <!-- Eye Icon for password visibility -->
     <i class="eye-icon move" id="eye" onclick="togglePassword()">👁️</i>
 
-    <div id="admin-panel" class="admin-panel">
+    <!-- User Dashboard -->
+    <div id="user-dashboard" style="display: none;">
+        <h2>Welcome to the User Dashboard!</h2>
+        <p>Here, users can access their personal settings and data.</p>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" style="display: none;">
         <h2>Welcome, Admin!</h2>
         <button onclick="toggleFeature('feature1')">Toggle Feature 1</button>
         <button onclick="toggleFeature('feature2')">Toggle Feature 2</button>
