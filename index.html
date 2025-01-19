@@ -3,114 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Movie Collection</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        main {
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 800px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        main p {
-            text-align: center;
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        ul li {
-            margin: 10px 0;
-            text-align: center;
-        }
-
-        ul li a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-
-        ul li a:hover {
-            background-color: #45a049;
-        }
-
-        .ad-container {
-            text-align: center;
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-            padding: 10px 0;
-        }
-
-        footer p {
-            margin: 0;
-        }
-    </style>
+    <title>Loading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Movie Collection</h1>
-    </header>
-    <main>
-        <p>Select a year to explore movies:</p>
-        <ul>
-            
-            <li><a href="log in form.html">🧿🧿log in form🧿🧿</a></li>
-            <li><a href="movie2007.html">Movies from 2007</a></li>
-            <li><a href="movie1981.html">Movies from 1981</a></li>
-            <li><a href="movie1979.html">Movies from 1979</a></li>
-            <li><a href="movie2005.html">Movies from 2005</a></li>
-            <li><a href="Code.html">secret place</a></li>  
-        </ul>
+<div class="form">
+    <div class="text">
+        <h2>Password</h2>
+        <div id="eye"><div id="pupil"></div></div>
+    </div> 
+        <input type="text" id="password">
+        <i class="fa-solid fa-eye" id="show-eye"></i>
+    <button id="enter">Enter</button>
+    <div id="light"></div>
+</div>
+    <!-- <div class="circle">
+        <div class="circle2"></div>
+    </div> -->
+    
 
-        <!-- Ad Section -->
-        <div class="ad-container">
-            <!-- Replace this placeholder with your real ad code -->
-            <img src="image1.jpg" alt="movies.jpg" width="460" height="345">
-            </script>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2025 My Movies Collection</p>
-    </footer>
+<script>
+
+    document.getElementById("show-eye").addEventListener("click", function () {
+    const input = document.getElementById("password");
+    const eye = document.getElementById("show-eye")
+    if (input.type === 'password') {
+        input.type = 'text';
+        eye.classList.add("no-line");
+
+    } else {
+        input.type = 'password';
+        eye.classList.remove("no-line");
+    }
+    document.getElementById("light").classList.toggle("luminous")
+    // eye.class('no-after');
+});
+
+
+
+const eye = document.getElementById('eye');
+const pupil = document.getElementById('pupil');
+
+
+window.addEventListener('mousemove', (e) => {
+  const eyeRect = eye.getBoundingClientRect();
+  const mouseX = e.clientX - eyeRect.left;
+  const mouseY = e.clientY - eyeRect.top;
+
+  const eyeCenterX = eyeRect.width / 2;
+  const eyeCenterY = eyeRect.height / 2;
+
+  // Set the maximum movement distance to be slightly less than half the eye's size
+  const maxDistance = eyeRect.width / 2 - pupil.offsetWidth / 2 - 10; // Reduced by 10px
+
+  // Calculate the distance between the mouse and the center of the eye
+  const deltaX = mouseX - eyeCenterX;
+  const deltaY = mouseY - eyeCenterY;
+
+  // Calculate the angle and distance from the center of the eye to the mouse
+  const angle = Math.atan2(deltaY, deltaX);
+  const distance = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY), maxDistance);
+
+  // Set the new position of the pupil, ensuring it doesn't move out too far
+  const pupilX = distance * Math.cos(angle) +10;
+  const pupilY = distance * Math.sin(angle) -5;
+
+  pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+});
+
+
+</script>
 </body>
 </html>
